@@ -1,14 +1,3 @@
-# Data-Structure
-
----
-
-# **Linked List**
-
----
-
-## Singly Linked List
-
-```cpp
 #include<stdio.h>
 #include<stdlib.h>
 struct Node
@@ -143,7 +132,3 @@ int main()
 
     return 0;
 }
-```
-
-
-
