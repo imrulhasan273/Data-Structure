@@ -28,6 +28,25 @@ void InsertStart(int x)
         temp->next = head;  //address containing in head will set in temp->next
     head = temp;            //address of head contains temp(new value)
 }
+void InsertEnd(int x)
+{
+    printf("data: %d\n",x);
+    struct Node* temp = (Node*)malloc(sizeof(struct Node));
+    temp->data = x;
+    if(head==NULL)
+    {
+        temp->next = NULL;
+        head = temp;
+        return;
+    }
+    struct Node* ptr = head;
+    while(ptr->next != NULL)
+    {
+        ptr = ptr->next;
+    }
+    temp->next = ptr->next;
+    ptr->next = temp;
+}
 void InsertPosition(int n,int data)
 {
     printf("pos: %d, data: %d\n", n, data);
@@ -47,6 +66,16 @@ void InsertPosition(int n,int data)
     }
     temp1->next = temp2->next;
     temp2->next = temp1;
+}
+void DeleteStart()
+{
+    struct Node* toDelete;
+    if(head == NULL)
+        return;
+    toDelete = head;
+    head = head->next;
+    printf("Data: %d\n", toDelete->data);
+    free(toDelete);
 }
 void DeletePosition(int n)
 {
@@ -73,10 +102,20 @@ void DeleteValue(int data)
     printf("data: %d\n", data);
     struct Node* del = head;
     struct Node* prev;
-    while(del->data != data)
+    if(del->data==data)
+    {
+        head = del->next;
+        free(del);
+        return;
+    }
+    while(del!=NULL)
     {
         prev = del; //Preserve the last del Node info
         del = del->next;
+        if(del->next==NULL)
+            return;
+        else if(del->data==data)
+            break;
     }
     //now del ==> Which will be deleted | prev ==> prev Node of Deleted Node.
     prev->next = del->next;
@@ -107,6 +146,14 @@ int main()
     InsertStart(5);
     Print();
 
+    printf("\nINSERTION ON ENDING POSITION\n------------------------------\n");
+    InsertEnd(99);
+    Print();
+    InsertEnd(44);
+    Print();
+    InsertEnd(77);
+    Print();
+
     printf("\nINSERTION NODE ON ANY POSITION: GIVEN (POSITION,DATA)\n-----------------------------------------------------\n");
     InsertPosition(1,2);
     Print();
@@ -125,6 +172,15 @@ int main()
     InsertPosition(9,19);
     Print();
 
+
+    printf("\nDELETE NODE FROM STARING POSITION\n------------------------\n");
+    DeleteStart();
+    Print();
+    DeleteStart();
+    Print();
+    DeleteStart();
+    Print();
+
     printf("\nDELETE NODE IN ANY POSITION: GIVEN (POSITION)\n---------------------------------------------\n");
     DeletePosition(1);
     Print();
@@ -133,12 +189,19 @@ int main()
     DeletePosition(6);
     Print();
 
+
     printf("\nDELETE NODE WHEN FOUND FIRST: GIVEN VALUE\n-----------------------------------------\n");
     DeleteValue(31);
     Print();
-    DeleteValue(22);
+    DeleteValue(12);
     Print();
     DeleteValue(19);
+    Print();
+    DeleteValue(77);
+    Print();
+    DeleteValue(4);
+    Print();
+    DeleteValue(65);
     Print();
 
     return 0;
